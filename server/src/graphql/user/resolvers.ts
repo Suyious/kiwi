@@ -1,19 +1,14 @@
-import { prismaClient } from "../../lib/db";
+import UserService, { CreateUserPayload, GetUserTokenPayload } from "../../services/user";
 
-const queries = {};
+const queries = {
+    getUserToken: async (_: any, payload: GetUserTokenPayload) => {
+       return await UserService.getUserToken(payload)
+    }
+};
 const mutations = {
-    createUser: async (_: any, { firstName, lastName, email, password }:
-        { firstName: string, lastName: string, email: string, password: string }) => {
-        await prismaClient.user.create({
-            data: {
-                firstName,
-                lastName,
-                email,
-                password,
-                salt: "random_salt"
-            }
-        });
-        return true;
+    createUser: async (_: any, payload: CreateUserPayload) => {
+        const res = await UserService.createUser(payload);
+        return res.id;
     }
 };
 

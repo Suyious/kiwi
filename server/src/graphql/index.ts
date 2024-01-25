@@ -1,12 +1,11 @@
 import { ApolloServer } from "@apollo/server";
-import { prismaClient } from "../lib/db";
 import { User } from "./user";
 
 export const createGraphqlServer = async () => {
     const graphqlServer = new ApolloServer({
         typeDefs: `
             type Query {
-                hello: String
+                ${User.queries}
             }
             type Mutation {
                 ${User.mutations}
